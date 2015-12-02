@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150925193334) do
+ActiveRecord::Schema.define(version: 20151106153218) do
+
+  create_table "authentications", force: :cascade do |t|
+    t.string   "uid",        limit: 255
+    t.string   "provider",   limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "location",   limit: 255
+    t.integer  "zip_code",   limit: 4
+  end
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -21,6 +42,33 @@ ActiveRecord::Schema.define(version: 20150925193334) do
     t.date     "last_visited"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "latitude",     limit: 255
+    t.string   "longitude",    limit: 255
+    t.string   "place_id",     limit: 255
+    t.string   "reference",    limit: 255
+    t.string   "types",        limit: 255
+    t.string   "vicinity",     limit: 255
   end
+
+  create_table "selected_restaurants", force: :cascade do |t|
+    t.integer  "group_id",      limit: 4
+    t.integer  "restaurant_id", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "selected_restaurants", ["group_id"], name: "index_selected_restaurants_on_group_id", using: :btree
+  add_index "selected_restaurants", ["restaurant_id"], name: "index_selected_restaurants_on_restaurant_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",            limit: 255, null: false
+    t.string   "crypted_password", limit: 255
+    t.string   "salt",             limit: 255
+    t.integer  "group_id",         limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end

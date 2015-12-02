@@ -3,10 +3,33 @@ Rails.application.routes.draw do
   root 'restaurants#index'
 
   resources :restaurants
+  resources :groups
 
   post '/spinner', to: 'restaurants#spin', as: 'spin_the_wheel'
   get '/spinner', to: 'restaurants#spin'
 
+  get '/search', to: 'restaurants#search', as: 'search_for_restaurant'
+  post '/find', to: 'restaurants#find', as: 'find_restaurant'
+
+  post '/find/add/:id', to: 'restaurants#add_restaurant_to_group', as: 'add_restaurant_to_group'
+
+  post '/groups/:id/select_group', to: 'groups#select_group', as: 'select_group'
+
+
+
+
+
+
+  # OAUTH STUFF
+
+  get "signout" => "sessions#destroy", :as => "signout"
+  get "signin"  => "sessions#new",     :as => "signin"
+
+  resources :sessions, only: [:create]
+
+  post "oauth/callback" => "oauths#callback"
+  get "oauth/callback" => "oauths#callback"
+  get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

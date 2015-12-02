@@ -1,10 +1,11 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :add_restaurant_to_group]
 
   # GET /restaurants
   # GET /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    #@restaurants = Restaurant.all
+    @restaurants = current_user.group.restaurants
   end
 
   # GET /restaurants/1
@@ -63,8 +64,42 @@ class RestaurantsController < ApplicationController
 
   ##############
   def spin
-    restaurant = Spinner.spin
+    restaurants = current_user.group.restaurants
+    r = Random.rand(restaurants.length - 1)
+    restaurant = restaurants[r]
     redirect_to restaurant_path(restaurant), notice: "You selected #{restaurant}"
+  end
+
+  def search
+  end
+
+  def find
+    @restaurants = []
+    response = Restaurant.find_by_name(params[:name])
+    response['results'].each do |resp|
+      restaurant = Restaurant.where(place_id: resp['place_id']).first_or_create do |r|
+        r.name = resp['name']
+        r.latitude = resp['geometry']['location']['lat']
+        r.longitude = resp['geometry']['location']['lng']
+        r.reference = resp['reference']
+        r.types = resp['types']
+        r.vicinity = resp['vicinity']
+        r.rating = resp['rating']
+        r.price = resp['price_level']
+        r.save!
+      end
+      @restaurants << restaurant
+    end
+    @restaurants
+  end
+
+  def add_restaurant_to_group
+    sr = SelectedRestaurant.new
+    sr.group = current_user.group
+    sr.restaurant = @restaurant
+    sr.save!
+
+    redirect_to root_path
   end
 
 

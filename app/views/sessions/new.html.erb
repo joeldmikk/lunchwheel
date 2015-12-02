@@ -1,0 +1,15 @@
+<%#= link_to "Login with Google", auth_at_provider_path(:provider => :google) %>
+
+<div class="login">
+    <div class="login-wrap">
+        <%= image_tag 'aol-logo.png', alt: 'AOL', class: 'logo' %>
+        <% flash.each do |name, msg| %>
+            <div class="message">
+                <%= content_tag :div, msg, id: "flash_#{name}" %>
+            </div>
+        <% end %>
+        <div class="input-row">
+           <%= link_to "Login with Google", auth_at_provider_path(:provider => :google), :class => 'signin button large' %>
+        </div>
+    </div>
+</div>
