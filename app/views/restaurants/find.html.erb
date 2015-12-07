@@ -6,7 +6,7 @@
   <%= "Type: #{r.types}" %><br>
   <%= "Vicinity: #{r.vicinity}" %><br>
   <%= "Last Visited: #{r.last_visited}" %><br>
-  <%= link_to "Add To Wheel", add_restaurant_to_group_path(r), method: :post %><br><hr><br>
+  <%= link_to "Add To Wheel", add_restaurant_to_group_path(r), class: "btn btn-default", method: :post %><br><hr><br>
   </div>
 <% end %>
 <% if @restaurants.empty? %>

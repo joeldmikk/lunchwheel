@@ -7,4 +7,8 @@ class Restaurant < ActiveRecord::Base
     GooglePlaces.find_restaurant_by_name(name)
   end
 
+  def self.find_by_popularity
+    GooglePlaces.find_restaurant_by_popularity
+  end
+
 end

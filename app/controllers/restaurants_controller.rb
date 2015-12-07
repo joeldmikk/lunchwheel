@@ -93,6 +93,26 @@ class RestaurantsController < ApplicationController
     @restaurants
   end
 
+  def popular
+    @restaurants = []
+    response = Restaurant.find_by_popularity
+    response['results'].each do |resp|
+      restaurant = Restaurant.where(place_id: resp['place_id']).first_or_create do |r|
+        r.name = resp['name']
+        r.latitude = resp['geometry']['location']['lat']
+        r.longitude = resp['geometry']['location']['lng']
+        r.reference = resp['reference']
+        r.types = resp['types']
+        r.vicinity = resp['vicinity']
+        r.rating = resp['rating']
+        r.price = resp['price_level']
+        r.save!
+      end
+      @restaurants << restaurant
+    end
+    render 'find'
+  end
+
   def add_restaurant_to_group
     sr = SelectedRestaurant.new
     sr.group = current_user.group

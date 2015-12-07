@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get '/search', to: 'restaurants#search', as: 'search_for_restaurant'
   post '/find', to: 'restaurants#find', as: 'find_restaurant'
+  post '/popular', to: 'restaurants#popular', as: 'popular_restaurant'
 
   post '/find/add/:id', to: 'restaurants#add_restaurant_to_group', as: 'add_restaurant_to_group'
 

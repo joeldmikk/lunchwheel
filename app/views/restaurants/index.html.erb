@@ -5,10 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Distance</th>
-      <th>Rating</th>
+      <th style="width: 40%;">Name</th>
+      <th style="width: 10%;">Price</th>
+      <th style="width: 10%;">Distance</th>
+      <th style="width: 10%;">Rating</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,9 +20,9 @@
         <td><%= restaurant.price %></td>
         <td><%= restaurant.distance %></td>
         <td><%= restaurant.rating %></td>
-        <td><%= link_to 'Show', restaurant %></td>
-        <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
-        <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', restaurant, class: "btn btn-default" %></td>
+        <td><%= link_to 'Edit', edit_restaurant_path(restaurant), class: "btn btn-default" %></td>
+        <td><%= link_to 'Destroy', restaurant, class: "btn btn-default", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,9 +30,9 @@
 
 <br>
 
-<%= link_to 'New Restaurant', new_restaurant_path %>
-<%= link_to 'Spin The Wheel', spin_the_wheel_path %>
+<%= link_to 'New Restaurant', new_restaurant_path, class: "btn btn-default" %>
+<%= link_to 'Spin The Wheel', spin_the_wheel_path, class: "btn btn-default" %>
 
-<%= "The Wheel of Time and the wheel of a man's life turn alike without pity or mercy. - Robert Jordan" %>
-<%= "Life's a wheel of fortune, and it's my chance to spin it. -Tupac Shakur" %>
-<%= "The wheel is come full circle -Will Shakespeare" %>
+<hr><br><%= "The Wheel of Time and the wheel of a man's life turn alike without pity or mercy. - Robert Jordan" %>
+<hr><br><%= "Life's a wheel of fortune, and it's my chance to spin it. -Tupac Shakur" %>
+<hr><br><%= "The wheel is come full circle -Will Shakespeare" %><hr>
