@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   post '/find/add/:id', to: 'restaurants#add_restaurant_to_group', as: 'add_restaurant_to_group'
 
   post '/groups/:id/select_group', to: 'groups#select_group', as: 'select_group'
+  post '/groups/:id/set_current_group', to: 'groups#set_current_group', as: 'set_current_group'
 
+
+  # Current Group stuff
+  get '/reset_session', to: 'application#reset_session_wrap', as: 'reset_session'
 
 
 

@@ -1,9 +1,11 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy, :select_group]
+  before_action :current_group, except: [:set_current_group]
 
   # GET /groups
   # GET /groups.json
   def index
+    @user_groups = current_user.groups
     @groups = Group.all
   end
 
@@ -62,11 +64,20 @@ class GroupsController < ApplicationController
   end
 
   def select_group
-    puts "\n\nheyo!\n\n"
-    user = current_user
-    user.group = @group
-    user.save!
+    membership = GroupMembership.new
+    # user = current_user
+    membership.user = current_user
+    membership.group = @group
+    membership.save!
+    session[:current_group] = @group
     redirect_to root_path, notice: "You joined #{@group.name}!"
+  end
+
+  def set_current_group
+    puts params
+    session[:current_group] = Group.find(params[:id])
+    redirect_to root_path
+    # render nothing: true
   end
 
   private
@@ -78,6 +89,9 @@ class GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:name, :location, :zip_code)
-      # params[:group]
+    end
+
+    def current_group
+      @current_group = Group.find(session[:current_group]['id']) if session[:current_group]
     end
 end

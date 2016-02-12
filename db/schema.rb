@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106153218) do
+ActiveRecord::Schema.define(version: 20160114173956) do
 
   create_table "authentications", force: :cascade do |t|
     t.string   "uid",        limit: 255
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20151106153218) do
 
   add_index "authentications", ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
+
+  create_table "group_memberships", force: :cascade do |t|
+    t.integer  "group_id",   limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "group_memberships", ["group_id"], name: "index_group_memberships_on_group_id", using: :btree
+  add_index "group_memberships", ["user_id"], name: "index_group_memberships_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -64,7 +74,6 @@ ActiveRecord::Schema.define(version: 20151106153218) do
     t.string   "email",            limit: 255, null: false
     t.string   "crypted_password", limit: 255
     t.string   "salt",             limit: 255
-    t.integer  "group_id",         limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -19,8 +19,8 @@ class GooglePlaces
     HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.933333,-79.033333&radius=5000&types=food&name=#{name}&key=AIzaSyAO95UzCT8ES3ElLoXkeYHAzGHy1rVV5ys")
   end
 
-  def self.find_restaurant_by_popularity
-    HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.933333,-79.033333&radius=5000&types=food&rankby=prominence&key=AIzaSyAO95UzCT8ES3ElLoXkeYHAzGHy1rVV5ys")
+  def self.find_restaurant_by_popularity(latitude, longitude)
+    HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=5000&types=food&rankby=prominence&key=AIzaSyAO95UzCT8ES3ElLoXkeYHAzGHy1rVV5ys")
   end
 
 

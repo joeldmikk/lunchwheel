@@ -1,8 +1,8 @@
 <%#= link_to "Login with Google", auth_at_provider_path(:provider => :google) %>
 
-<div class="login">
+<div class="login" style="margin-top:100px;">
     <div class="login-wrap">
-        <%= image_tag 'aol-logo.png', alt: 'AOL', class: 'logo' %>
+        <%#= image_tag 'aol-logo.png', alt: 'AOL', class: 'logo' %>
         <% flash.each do |name, msg| %>
             <div class="message">
                 <%= content_tag :div, msg, id: "flash_#{name}" %>

@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def reset_session_wrap
+    reset_session
+    redirect_to root_path
+  end
+
   private
   
   def not_authenticated

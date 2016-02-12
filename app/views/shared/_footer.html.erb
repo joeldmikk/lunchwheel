@@ -1,0 +1,36 @@
+<div id="footer">
+  <div class="wrapper" style="height:100px">
+    <blockquote id="quote1">The Wheel of Time and the wheel of a man's life turn alike without pity or mercy.
+      <footer>Robert Jordan</footer>
+    </blockquote>
+    <blockquote id="quote2">Life's a wheel of fortune, and it's my chance to spin it.
+      <footer>Tupac Shakur</footer>
+    </blockquote>
+    <blockquote id="quote3">The wheel is come full circle.
+      <footer>Bill Shakespeare</footer>
+    </blockquote>
+    <blockquote id="quote4">I wish I could be behind the wheel for every stunt.
+      <footer>Paul Walker</footer>
+    </blockquote>
+    <blockquote id="quote5">The wheel of fortune turns round incessantly, and who can say to himself, <i>I shall today be uppermost</i>?
+      <footer>Confuscious</footer>
+    </blockquote>
+  </div>
+</div>
+
+
+<script>
+jQuery(function () {
+    var $els = $('blockquote[id^=quote]'),
+        i = 0,
+        len = $els.length;
+
+    $els.slice(1).hide();
+    setInterval(function () {
+        $els.eq(i).fadeOut(function () {
+            i = (i + 1) % len
+            $els.eq(i).fadeIn();
+        })
+    }, 5000)
+})
+</script>

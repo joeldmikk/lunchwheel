@@ -1,11 +1,16 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :add_restaurant_to_group]
+  before_action :current_group, except: [:set_current_group]
 
   # GET /restaurants
   # GET /restaurants.json
   def index
-    #@restaurants = Restaurant.all
-    @restaurants = current_user.group.restaurants
+    if session[:current_group].nil?
+      redirect_to groups_path
+    else
+      @group = Group.find(session[:current_group]['id'])
+      @restaurants = @group.restaurants
+    end
   end
 
   # GET /restaurants/1
@@ -64,7 +69,7 @@ class RestaurantsController < ApplicationController
 
   ##############
   def spin
-    restaurants = current_user.group.restaurants
+    restaurants = @current_group.restaurants
     r = Random.rand(restaurants.length - 1)
     restaurant = restaurants[r]
     redirect_to restaurant_path(restaurant), notice: "You selected #{restaurant}"
@@ -95,7 +100,7 @@ class RestaurantsController < ApplicationController
 
   def popular
     @restaurants = []
-    response = Restaurant.find_by_popularity
+    response = Restaurant.find_by_popularity(params[:latitude], params[:longitude])
     response['results'].each do |resp|
       restaurant = Restaurant.where(place_id: resp['place_id']).first_or_create do |r|
         r.name = resp['name']
@@ -115,7 +120,7 @@ class RestaurantsController < ApplicationController
 
   def add_restaurant_to_group
     sr = SelectedRestaurant.new
-    sr.group = current_user.group
+    sr.group = Group.find(session[:current_group]['id'])
     sr.restaurant = @restaurant
     sr.save!
 
@@ -132,5 +137,9 @@ class RestaurantsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
       params.require(:restaurant).permit(:name, :price, :distance, :rating)
+    end
+
+    def current_group
+      @current_group = Group.find(session[:current_group]['id']) if session[:current_group]
     end
 end

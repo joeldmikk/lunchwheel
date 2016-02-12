@@ -35,6 +35,9 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  # Stop logging asset pipeline in development
+  gem 'quiet_assets'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 

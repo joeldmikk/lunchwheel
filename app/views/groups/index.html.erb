@@ -1,21 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Join a Group:</h1>
+<h1>Which Group Are You Spinning For?</h1>
 
-  <% @groups.each do |group| %>
-    <%= link_to group.name, select_group_path(group), class: "btn btn-default", method: :post %>
+  <% @user_groups.each do |group| %>
+    <% css_class = 'btn-default' %>
+    <% if !@current_group.nil? && group.id == @current_group['id'] %>
+      <% css_class = 'btn-primary' %>
+    <% end %>
+      <%# css_class = group.id == @current_group['id'] ? 'btn-primary' : 'btn-default' %>
+    <%# else %>
+      <%# css_class = 'btn-default' %>
+    <%# end %>
+    <%= link_to group.name, set_current_group_path(group), class: "btn #{css_class}", method: :post %>
   <% end %>
 
 
 
-<h1>Listing Groups</h1>
+<h1>All Groups</h1>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Location</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -24,6 +32,7 @@
       <tr>
         <td><%= group.name %></td>
         <td><%= group.location %> // <%= group.zip_code %></td>
+        <td><%= link_to 'Join', select_group_path(group), class: "btn btn-default", method: :post %></td>
         <td><%= link_to 'Show', group, class: "btn btn-default" %></td>
         <td><%= link_to 'Edit', edit_group_path(group), class: "btn btn-default" %></td>
         <td><%= link_to 'Destroy', group, class: "btn btn-default", method: :delete, data: { confirm: 'Are you sure?' } %></td>
