@@ -3,5 +3,15 @@
 
   Use Font Awesome icons (default)
   To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
-  =require twitter-bootstrap-static/fontawesome
+
   */
+
+  .body-container {
+    display: block;
+    margin-top: 100px;
+  }
+
+  .geolocation-helper-button {
+    display: inline-block;
+    clear:both;
+  }

@@ -23,5 +23,16 @@ class GooglePlaces
     HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=5000&types=food&rankby=prominence&key=AIzaSyAO95UzCT8ES3ElLoXkeYHAzGHy1rVV5ys")
   end
 
+  def self.geocode_zip(zip)
+    resp = HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{zip}&key=AIzaSyAO95UzCT8ES3ElLoXkeYHAzGHy1rVV5ys")
+    coordinates = {}
+    resp = resp.parsed_response['results'].first
+    puts resp['geometry']['location'].pretty_inspect
+    coordinates[:latitude] = resp['geometry']['location']['lat']
+    coordinates[:longitude] = resp['geometry']['location']['lng']
+    puts coordinates
+    return coordinates
+  end
+
 
 end

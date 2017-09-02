@@ -16,14 +16,12 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :location %><br>
-    <%= f.text_field :location %>
-  </div>
-  <div class="field">
     <%= f.label :zip_code %><br>
     <%= f.number_field :zip_code %>
+    <%= link_to 'HELP! I\'M A BIG BABY AND I DON\'T KNOW WHERE I AM', '#', class: 'geolocation-helper-button btn btn-danger' %>
   </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

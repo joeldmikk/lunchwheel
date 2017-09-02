@@ -26,7 +26,11 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
+    puts group_params
     @group = Group.new(group_params)
+    @group.latitude = params[:latitude] if params[:latitude]
+    @group.longitude = params[:longitude] if params[:longitude]
+    @group.location = params[:location] if params[:location]
 
     respond_to do |format|
       if @group.save
@@ -88,7 +92,7 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :location, :zip_code)
+      params.require(:group).permit(:name, :zip_code)
     end
 
     def current_group
